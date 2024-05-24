@@ -1,0 +1,4 @@
+/* This css file is used to set up globally specific styles. */
+:root {
+    --el-menu-active-color: #f88070 !important;
+}
