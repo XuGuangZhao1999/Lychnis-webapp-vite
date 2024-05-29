@@ -22,7 +22,9 @@ import './commands'
 import { mount } from 'cypress/vue'
 import getStore from '../../src/assets/js/store/index.js'
 
-// Cypress.Commands.add('mount', mount)
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import i18n from '../../src/assets/js/language/index.js'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
     // Setup options object
@@ -39,6 +41,8 @@ Cypress.Commands.add('mount', (component, options = {}) => {
     options.global.plugins.push({
       install(app) {
         app.use(store)
+        app.use(ElementPlus, { locale: store.getters['core/locale'] })
+        app.use(i18n)
       },
     })
   
