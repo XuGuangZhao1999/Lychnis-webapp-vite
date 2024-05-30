@@ -12,6 +12,10 @@ export default defineConfig({
     // Vitest will provide global APIs for test files.
     globals: true,
     environment: 'jsdom',
-    reporters: ['html']
+    reporters: ['html'],
+    coverage: {
+      enabled: true,
+      reporter: ['html', 'text', 'json']
+    }
   }
 })
