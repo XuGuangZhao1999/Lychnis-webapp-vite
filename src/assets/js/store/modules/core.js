@@ -1,6 +1,7 @@
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import en from 'element-plus/dist/locale/en.mjs'
 import i18n from '../../language/index.js'
+import { hexToRgb } from '../../utils/colorFormatChange.js'
 
 const coreModel = {
     namespaced: true,
@@ -147,14 +148,6 @@ const coreModel = {
         },
         updateChannelColor(context, channel){
             if(context.state.bLoaded == false) return
-
-            function hexToRgb(hex) {
-                let b = parseInt(hex.substring(1, 3), 16);
-                let g = parseInt(hex.substring(3, 5), 16);
-                let r = parseInt(hex.substring(5, 7), 16);
-
-                return [r, g, b];
-            }
 
             let rgb = hexToRgb(channel.color)
             let req = {

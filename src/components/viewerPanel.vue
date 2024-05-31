@@ -73,6 +73,7 @@
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import channelColorSelector from './UI/channelColorSelector.vue'
+import { rgbToHex } from '../assets/js/utils/colorFormatChange';
 
 export default {
     name: 'ViewerPanel',
@@ -279,17 +280,6 @@ export default {
             }
 
             interact(interactEventHandler(req))
-        }
-
-        function rgbToHex(color) {
-            let rgbArray = color.split(' ').map(Number)
-            let hex = rgbArray.map(x => {
-                let hex = (x * 255).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            });
-            // rgb->bgr
-            [hex[0], hex[2]] = [hex[2] , hex[0]]
-            return '#' + hex.join('');
         }
 
         function updateColor(index, color) {

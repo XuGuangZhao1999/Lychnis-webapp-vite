@@ -204,7 +204,7 @@ describe('coreModel: actions', ()=>{
       expect(cefQueryMock).toHaveBeenCalledTimes(0)
       expect(showMessageMock).toHaveBeenCalledTimes(0)
 
-      bLoaded: true
+      // bLoaded: true
       store.commit("core/setBLoaded", true)
       await store.dispatch("core/updateChannelColor", channelColor)
       expect(store.state.core.channels[channelColor.index].color).toEqual((119/255)+" "+(53/255)+" "+(101/255))
