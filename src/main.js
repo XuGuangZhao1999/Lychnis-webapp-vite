@@ -9,29 +9,37 @@ import store from './assets/js/store/index.js'
 // Paint image on canvas
 let paintChain = Promise.resolve()
 
-window.paint = function(imageBinary) {
-    paintChain = paintChain.then(() => new Promise((resolve) =>{
-        let blob = new Blob([imageBinary], {type: "image/jpeg"})
-        let img = new Image()
+window.paint = (function(){
+    let viewer
 
-        img.src = URL.createObjectURL(blob)
-        img.onload = function() {
-            let canvas = document.getElementById("viewer")
-            let ctx = canvas.getContext("2d")
-
-            // Two canvas are used to avoid the image being blurred
-            let offscreen = new OffscreenCanvas(canvas.width, canvas.height)
-            let offscreenCtx = offscreen.getContext("2d")
-            offscreenCtx.imageSmoothingEnabled = true
-            offscreenCtx.drawImage(img, 0, 0)
-
-            requestAnimationFrame(() => {
-                ctx.drawImage(offscreen, 0, 0)
-            })
-            resolve()
-        }
-    }))
-}
+    return function(imageBinary){
+        paintChain = paintChain.then(() => new Promise((resolve) =>{
+            let blob = new Blob([imageBinary], {type: "image/jpeg"})
+            let img = new Image()
+    
+            img.src = URL.createObjectURL(blob)
+            img.onload = function() {
+                if(!viewer){
+                    viewer = document.getElementById("viewer")
+                }
+                let ctx = viewer.getContext("2d")
+    
+                // Two canvas are used to avoid the image being blurred
+                let offscreen = new OffscreenCanvas(viewer.width, viewer.height)
+                let offscreenCtx = offscreen.getContext("2d")
+                offscreenCtx.imageSmoothingEnabled = true
+                offscreenCtx.drawImage(img, 0, 0)
+    
+                requestAnimationFrame(() => {
+                    ctx.drawImage(offscreen, 0, 0)
+                })
+                resolve()
+            }
+        }))
+    
+        return paintChain
+    }
+})()
 
 // Show message
 window.showMessage = function(message) {
