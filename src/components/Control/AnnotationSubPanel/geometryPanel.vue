@@ -6,8 +6,9 @@
         <el-button
           id="advancedBtn"
           :text="true"
+          @click="advanced = true"
         >
-          {{ $t('annotation.geometry.advanced') }}
+          {{ $t('annotation.geometry.advanced.btn') }}
         </el-button>
       </div>
     </template>
@@ -73,10 +74,32 @@
       </el-form-item>
     </el-form>
   </el-card>
+
+  <!-- Advanced dialog -->
+  <el-dialog v-model="advanced" :title="$t('annotation.geometry.advanced.title')" style="max-width: 600px;">
+    <el-form :model="advancedForm" label-position="left" label-width="auto">
+      <el-form-item :label="$t('annotation.geometry.advanced.syn')">
+        <el-select v-model="advancedForm.syn" placeholder="None" size="middle">
+          <el-option v-for="item in synOptions" :value="item"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="$t('annotation.geometry.advanced.voxel_size')">
+        <el-input v-model="advancedForm.voxel_size.x" />
+        <el-input v-model="advancedForm.voxel_size.y" />
+        <el-input v-model="advancedForm.voxel_size.z" />
+      </el-form-item>
+      <el-form-item :label="$t('annotation.geometry.advanced.position')">
+        <el-input v-model="advancedForm.position.x" />
+        <el-input v-model="advancedForm.position.y" />
+        <el-input v-model="advancedForm.position.z" />
+      </el-form-item>
+    </el-form>
+    <button @click="adUpdateAction" style="width: 80%;">{{ $t('annotation.geometry.advanced.update') }}</button>
+  </el-dialog>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -85,6 +108,7 @@ export default {
     },
     setup() {
         let store = useStore();
+        let advanced = ref(false);
         // Block size
         let blockSizeIndex = ref(3);
 
@@ -154,8 +178,28 @@ export default {
         // Center
         let center = computed(() => store.state.core.center)
 
+        let synOptions = ['None', 'x-y-z', 'x-y']
+        let advancedForm = reactive({
+          syn: '',
+          voxel_size: {
+            x: 1,
+            y: 1,
+            z: 1
+          },
+          position: {
+            x: 0,
+            y: 0,
+            z: 0
+          }
+        })
+
+        function adUpdateAction() {
+
+        }
+
         return {
             store,
+            advanced,
             width,
             height,
             bReadonly,
@@ -164,7 +208,10 @@ export default {
             updateBlockSize,
             updateBlockSize_width,
             updateBlockSize_height,
-            center
+            center,
+            synOptions,
+            advancedForm,
+            adUpdateAction
         }
     }
 }

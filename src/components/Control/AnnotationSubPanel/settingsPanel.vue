@@ -13,22 +13,7 @@
     >
       <el-form-item :label="$t('annotation.settings.annotation_channel')">
         <el-select>
-          <el-option
-            label="通道1"
-            value="1"
-          />
-          <el-option
-            label="通道2"
-            value="2"
-          />
-          <el-option
-            label="通道3"
-            value="3"
-          />
-          <el-option
-            label="通道4"
-            value="4"
-          />
+          <el-option v-for="index in store.state.core.channels.length" :label="'Channel'+index" :value="index"/>
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('annotation.settings.annotation_type')">
@@ -58,13 +43,18 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+
 export default {
     name: 'SettingsPanel',
     props: {
 
     },
     setup() {
+        let store = useStore();
+
         return {
+          store
         }
     }
 }

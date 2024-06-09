@@ -142,4 +142,17 @@ input {
     color: rgb(170, 199, 104) !important;
 }
 
+.el-dialog {
+    background-color: #313131 !important;
+    color: white !important;
+}
+
+.el-dialog__title {
+    color: white !important;
+}
+
+.el-dialog__body {
+    color: white !important;
+}
+
 </style>
