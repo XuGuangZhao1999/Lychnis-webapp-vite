@@ -21,10 +21,7 @@
         </div>
       </div>
     </template>
-    <el-table border v-show="!popUp">
-      <el-table-column :label="$t('annotation.special_nodes.id')" />
-      <el-table-column :label="$t('annotation.special_nodes.message')" />
-    </el-table>
+    <nodesTable v-show="!popUp"></nodesTable>
   </el-card>
   
   <!-- Filter dialog -->
@@ -55,20 +52,21 @@
   </el-dialog>
 
   <!-- Pop up dialog -->
-   <el-dialog v-model="popUp" :title="$t('annotation.special_nodes.title')">
-    <el-table border>
-      <el-table-column :label="$t('annotation.special_nodes.id')" />
-      <el-table-column :label="$t('annotation.special_nodes.message')" />
-    </el-table>
+   <el-dialog v-model="popUp" :title="$t('annotation.special_nodes.title')" draggable="true" overflow="true">
+    <nodesTable></nodesTable>
    </el-dialog>
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import nodesTable from '../../UI/nodesTable.vue';
+import { ref } from 'vue';
 
 export default {
     name: 'SpecialNodePanel',
     props: {
+    },
+    components: {
+      nodesTable
     },
     setup() {
       let filter = ref(false);
