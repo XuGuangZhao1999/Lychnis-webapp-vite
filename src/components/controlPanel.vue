@@ -6,10 +6,10 @@
     stretch="true"
   >
     <el-tab-pane :label="$t('annotation.title')">
-        <annotationPanel />
+      <annotationPanel />
     </el-tab-pane>
     <el-tab-pane :label="$t('animation.title')">
-        <animationPanel />
+      <animationPanel />
     </el-tab-pane>
   </el-tabs>
 </template>

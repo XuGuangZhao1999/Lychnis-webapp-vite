@@ -4,6 +4,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import i18n from './assets/js/language/index.js'
 import store from './assets/js/store/index.js'
+import { drawScaleLine } from './assets/js/utils/canvasUtils.js'
 
 // Global function
 // Paint image on canvas
@@ -29,6 +30,7 @@ window.paint = (function(){
                 let offscreenCtx = offscreen.getContext("2d")
                 offscreenCtx.imageSmoothingEnabled = true
                 offscreenCtx.drawImage(img, 0, 0)
+                drawScaleLine(offscreenCtx, viewer.height, store.state.core.scale)
     
                 requestAnimationFrame(() => {
                     ctx.drawImage(offscreen, 0, 0)

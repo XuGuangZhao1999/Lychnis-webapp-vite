@@ -13,7 +13,12 @@
     >
       <el-form-item :label="$t('annotation.settings.annotation_channel')">
         <el-select>
-          <el-option v-for="index in store.state.core.channels.length" :label="'Channel'+index" :value="index"/>
+          <el-option
+            v-for="index in store.state.core.channels.length"
+            :key="index"
+            :label="'Channel'+index"
+            :value="index"
+          />
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('annotation.settings.annotation_type')">
@@ -36,13 +41,14 @@
         <el-input />
       </el-form-item>
       <el-form-item :label="$t('annotation.settings.user_name')">
-        <el-input />
+        <el-input v-model="user_name" />
       </el-form-item>
     </el-form>
   </el-card>
 </template>
 
 <script>
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -52,9 +58,15 @@ export default {
     },
     setup() {
         let store = useStore();
+        // let user_name = ref(store.state.core.username);
+        let user_name = computed({
+          get: () => store.state.core.username,
+          set: (value) => store.dispatch('core/updateUsername', value)
+        });
 
         return {
-          store
+          store,
+          user_name
         }
     }
 }

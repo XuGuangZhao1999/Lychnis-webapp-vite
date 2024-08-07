@@ -7,6 +7,7 @@ const coreModel = {
     namespaced: true,
     state() {
         return {
+            username: "",
             language: "en",
             I18N: i18n,
             bLoaded: false,
@@ -26,9 +27,14 @@ const coreModel = {
                 "height": 256,
             },
             channels: [],
+            scale: 0,
         }
     },
     mutations: {
+        // Set username
+        setUsername(state, name) {
+            state.username = name
+        },
         // Set the language of the Element Plus component
         setLanguage(state, lang) {
             state.language = lang
@@ -81,8 +87,32 @@ const coreModel = {
             state.contrastRange.lower = range.lower
             state.contrastRange.upper = range.upper
         },
+        // Set the scale
+        setScale(state, scale){
+            state.scale = scale
+        }
     },
     actions: {
+        updateUsername(context, name){
+            let req = {
+                "functionName": "updateUsername",
+                "args": {
+                    "username": name
+                }
+            }
+
+            window.cefQuery({
+                request: JSON.stringify(req),
+                onSuccess: function(response){
+                    window.showMessage("Username change: " + response)
+                    context.commit('setUsername', name)
+                },
+                onFailure: function(error_code, error_message){
+                    window.showMessage(error_code + ": " + error_message)
+                }
+            }
+            )
+        },
         updateResolution(context, resId){
             if(context.state.bLoaded == false) return
             let req = {

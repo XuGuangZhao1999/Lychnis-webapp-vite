@@ -76,11 +76,27 @@
   </el-card>
 
   <!-- Advanced dialog -->
-  <el-dialog v-model="advanced" :title="$t('annotation.geometry.advanced.title')" style="max-width: 600px;">
-    <el-form :model="advancedForm" label-position="left" label-width="auto">
+  <el-dialog
+    v-model="advanced"
+    :title="$t('annotation.geometry.advanced.title')"
+    style="max-width: 600px;"
+  >
+    <el-form
+      :model="advancedForm"
+      label-position="left"
+      label-width="auto"
+    >
       <el-form-item :label="$t('annotation.geometry.advanced.syn')">
-        <el-select v-model="advancedForm.syn" placeholder="None" size="middle">
-          <el-option v-for="item in synOptions" :value="item"/>
+        <el-select
+          v-model="advancedForm.syn"
+          placeholder="None"
+          size="middle"
+        >
+          <el-option
+            v-for="(item, index) in synOptions"
+            :key="index"
+            :value="item"
+          />
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('annotation.geometry.advanced.voxel_size')">
@@ -94,7 +110,12 @@
         <el-input v-model="advancedForm.position.z" />
       </el-form-item>
     </el-form>
-    <button @click="adUpdateAction" style="width: 80%;">{{ $t('annotation.geometry.advanced.update') }}</button>
+    <button
+      style="width: 80%;"
+      @click="adUpdateAction"
+    >
+      {{ $t('annotation.geometry.advanced.update') }}
+    </button>
   </el-dialog>
 </template>
 
